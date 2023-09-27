@@ -1,0 +1,26 @@
+# 1.We need to mention version which is completely options
+# 2. services - how many container do you want to spin up , we need to add that much services
+# if you dont give image name then it will pick automatically , but you can give your self too
+
+
+services:
+    #api (its service name , like FE BE anything)
+    api:
+      #  build: DOCKER_FILE_LOCATION
+      # build: ./node-app (short)
+      build: 
+          #context: LOCATION OF APP (where we have docker file)
+          #dockerfile : Dockerfile Name
+           context: ./node-app
+           dockerfile: Dockerfile
+           
+      image: node-api-img:1.0.0
+      ports:
+           - "8080:8080"
+      volumes:
+           - ./node-app:/app
+      environment:
+          API_KEY: 123455
+          PORT: 8080
+
+    # frontend:  another sevice on same indentation

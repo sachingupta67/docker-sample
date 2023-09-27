@@ -1,0 +1,28 @@
+# 1. Step From BaseImage | baseimage eg: for node app need node , we can use python for python project
+   # Eg: Node:16 (version of node), alpine for taking linux flavour for less size of container otherwise it will be huge  
+
+FROM node:16-alpine
+
+WORKDIR  /app 
+
+
+# 2 Copy Files into docker container | COPY source dest | source = workingdirector ,dest : current
+  # - Approach 1 : COPY fileName /app/ | here , if /app not exists then it will create (in root) , we dont need to keep in root, it cause issue of override if we have same file
+      # - COPY . /app
+      # also create dockerignore
+      
+   # Approach 2 : COPY . . | first dot means source current where dockerfile, second dot is working directory
+   # now npm install will run if package json change 
+COPY package.json .
+RUN npm install 
+COPY . .
+
+# Now install 
+
+# RUN npm install , if we writing npm install after COPY . . then it will run npm install again 
+EXPOSE 8888
+
+# NOW Run into our container
+
+CMD [ "npm","start" ]
+
